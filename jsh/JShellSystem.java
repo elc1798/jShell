@@ -1,12 +1,12 @@
 import java.util.*;
+import java.io.PrintWriter;
 import java.io.File;
 
 public class JShellSystem {
 
 	// Container for a session of JShell, accessing system for directory moving and access
-
-	public static String currDir = System.getProperty("user.dir");		//User starts in current working directory, defined by .jshrc
-	public static String OSNAME = System.getProperty("os.name");		//User OS
+	
+	public String currDir = System.getProperty("user.dir");
 	
 	public static boolean checkPathExistence(String path) {
 		File f = new File(path);
@@ -16,22 +16,22 @@ public class JShellSystem {
 	public void cd(String path) {
 
 		String dirBackup = currDir;
-		String[] splitPath = path.split(System.getProperty("file.separator"));	//Split path based on the marker directory marker
-		if (path.charAt(0) == System.getProperty("file.separator").charAt(0)) {
-			currDir = System.getProperty("file.separator");
+		String[] splitPath = path.split(CONSTANTS.DIRMARKER);	//Split path based on the marker directory marker
+		if (path.charAt(0) == CONSTANTS.DIRMARKER.charAt(0)) {
+			currDir = "";
 		}
 
 		try {
 			for (int i = 0; i < splitPath.length; i++) {
 				if (splitPath[i].equals("..")) {
 					currDir = currDir.substring(0 , currDir.length() - 1);
-					for (int k = currDir.length() - 1; !currDir.substring(k , k + 1).equals(System.getProperty("file.separator")); k--) {
+					for (int k = currDir.length() - 1; !currDir.substring(k , k + 1).equals(CONSTANTS.DIRMARKER); k--) {
 						currDir = currDir.substring(0 , k);
 					}
 //				} else if () {
 
 				} else {
-					currDir += splitPath[i] + System.getProperty("file.separator");
+					currDir += splitPath[i] + CONSTANTS.DIRMARKER;
 				}
 				if (!checkPathExistence(currDir)) {
 					throw new Exception();
@@ -48,4 +48,18 @@ public class JShellSystem {
 		JShell.subprocess("ls " + path);
 	}
 
+	public void crtFile(String path , String fileName){
+		try {
+			PrintWriter NEWFILE = new PrintWriter(new File(path + CONSTANTS.DIRMARKER + fileName));
+			NEWFILE.println("");
+			NEWFILE.close();
+		} catch(Exception e){
+			System.out.println("Creating file failed.");
+		}
+	}
+	
+	public void mv(String src , String dst){
+		JShell.subprocess("mv " + src + " " + dst);
+	}
+	
 }

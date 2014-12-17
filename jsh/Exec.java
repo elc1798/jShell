@@ -5,18 +5,15 @@ public class Exec {
 
 //		System Variables
 
-	private static String OSNAME = System.getProperty("os.name");
-	private static String OSARCH = System.getProperty("os.arch");
-	private static String HOMEDIR = System.getProperty("user.home");
 	private static Scanner inputStream = new Scanner(System.in);
 
 	public static void main(String[] args) {
 
 		System.out.println("JShell loading... ");
-		System.out.println("OS Detected: " + OSNAME + " running on " + OSARCH + " architecture");
-		System.out.println("Home Directory: " + HOMEDIR);
+		System.out.println("OS Detected: " + CONSTANTS.OSNAME + " running on " + CONSTANTS.OSARCH + " architecture");
+		System.out.println("Home Directory: " + CONSTANTS.HOMEDIR);
 
-		if (OSNAME.substring(0 , 3).toUpperCase().equals("WIN")){
+		if (CONSTANTS.OSNAME.substring(0 , 3).toUpperCase().equals("WIN")){
 			System.out.println("JShell is built for *nix systems and cannot be run on Windows");
 			System.exit(0);
 		}

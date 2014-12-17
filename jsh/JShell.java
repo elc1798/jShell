@@ -5,9 +5,6 @@ public class JShell{
 
 //              System Variables
 
-	private static String OSNAME = System.getProperty("os.name");
-	private static String HOMEDIR = System.getProperty("user.home");
-
 	ArrayList<Process> procQueue = new ArrayList<Process>();
 
 	public static Runtime console = Runtime.getRuntime();
@@ -51,11 +48,13 @@ public class JShell{
 		if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
 			System.exit(0);
 		} else if (buffer.equalsIgnoreCase("cd")) {
-			instance.cd(HOMEDIR);
+			instance.cd(CONSTANTS.HOMEDIR);
 		} else if (buffer.contains("cd ")){
 			instance.cd(buffer.substring(3));
 		} else if (buffer.equalsIgnoreCase("ls")) {
 			instance.ls(instance.currDir);
+		} else if (buffer.contains("ls") && buffer.contains("..")) {
+			
 		} else if (buffer.contains("ls ")) {
 			instance.ls(buffer.substring(3));
 		} else if (buffer.length() >= 4) {
@@ -67,10 +66,6 @@ public class JShell{
 		} else {
 			JShell.subprocess(buffer);
 		}
-	}
-
-	public static void javaVirtualShell(){
-		
 	}
 
 }
