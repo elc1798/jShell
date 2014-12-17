@@ -50,9 +50,12 @@ public class JShellSystem {
 
 	public void crtFile(String path , String fileName){
 		try {
-			PrintWriter NEWFILE = new PrintWriter(new File(path + CONSTANTS.DIRMARKER + fileName));
-			NEWFILE.println("");
-			NEWFILE.close();
+			File NEWFILE = new File(path + CONSTANTS.DIRMARKER + fileName);
+			if (!NEWFILE.exists()) {
+				NEWFILE.createNewFile();
+			} else {
+				System.out.println("File already exists. Cannot Create.");
+			}
 		} catch(Exception e){
 			System.out.println("Creating file failed.");
 		}
