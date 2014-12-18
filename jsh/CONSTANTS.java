@@ -4,6 +4,7 @@ public class CONSTANTS {
 	public static final String HOMEDIR		= System.getProperty("user.home");
 	public static final String DIRMARKER	= System.getProperty("file.separator");
 	public static final String OSARCH 		= System.getProperty("os.arch");
+	public static final String JRE_VER		= System.getProperty("java.version");
 	public static final String JSHRT		= HOMEDIR + DIRMARKER + ".jsh" + DIRMARKER;
 	public static final String JSHRC		= HOMEDIR + DIRMARKER + ".jshrc";
 	public static final String JVTMP		= JSHRT + "Tmp.java";

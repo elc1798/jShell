@@ -12,6 +12,7 @@ public class Exec {
 		System.out.println("JShell loading... ");
 		System.out.println("OS Detected: " + CONSTANTS.OSNAME + " running on " + CONSTANTS.OSARCH + " architecture");
 		System.out.println("Home Directory: " + CONSTANTS.HOMEDIR);
+		System.out.println("Java Version Detected: " + CONSTANTS.JRE_VER);
 
 		if (CONSTANTS.OSNAME.substring(0 , 3).toUpperCase().equals("WIN")){
 			System.out.println("JShell is built for *nix systems and cannot be run on Windows");
