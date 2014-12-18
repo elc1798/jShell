@@ -1,8 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-import com.sun.org.apache.bcel.internal.Constants;
-
 public class Exec {
 
 //		System Variables
