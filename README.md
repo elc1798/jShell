@@ -11,13 +11,13 @@ Shell Written In Java, For Java
   
   - Ctrl-C , Ctrl-D kill process key stroke
   
-  - Text Highlighting
-  
 # Current Features:
 
 ## Version 0.02a
 
   - Added Persistent Java console, that resembles a Python console
+
+  - Text Highlighting
 
 ## Version 0.01a
 

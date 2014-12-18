@@ -52,11 +52,31 @@ public class JShellSystem {
 		String backup = currDir;
 		cd(path);
 		File[] files = new File(currDir).listFiles();
+		Arrays.sort(files);
 		for (File file : files) {
-		    if (file.isDirectory()) {
-		        System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else if (file.isHidden()) {
+		    if (file.isHidden()) {
+		    	//Do nothing! Because we don't want to show hidden!
+		    } else if (file.isDirectory()) {
+		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
+		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else {
+		    	System.out.println(file.getName());
+		    }
+		}
+		currDir = backup;
+	}
+	
+	public void lsShowHidden(String path) {
+		String backup = currDir;
+		cd(path);
+		File[] files = new File(currDir).listFiles();
+		Arrays.sort(files);
+		for (File file : files) {
+		    if (file.isHidden()) {
 		    	System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.isDirectory()) {
+		        System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
 		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else {
@@ -81,6 +101,10 @@ public class JShellSystem {
 	
 	public void mv(String src , String dst){
 		JShell.subprocess("mv " + src + " " + dst);
+	}
+	
+	public void clear() {
+		System.out.print("\033\143");
 	}
 	
 }

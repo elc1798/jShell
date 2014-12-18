@@ -101,10 +101,14 @@ public class JShell{
 			instance.cd(buffer.substring(3));
 		} else if (buffer.equalsIgnoreCase("ls")) {
 			instance.ls(instance.currDir);
-		} else if (buffer.contains("ls") && buffer.contains("..")) {
+		} else if (buffer.startsWith("ls -a ")) {
+			instance.lsShowHidden(buffer.substring(6));
+		} else if (buffer.startsWith("ls ") && buffer.contains("..")) {
 
-		} else if (buffer.contains("ls ")) {
+		} else if (buffer.startsWith("ls ")) {
 			instance.ls(buffer.substring(3));
+		} else if (buffer.equalsIgnoreCase("clear")) {
+			instance.clear();
 		} else {
 			JShell.subprocess(buffer);
 		}
