@@ -117,7 +117,7 @@ public class JShellSystem {
 		}
 	}
 	
-	public void mv(String src , String dst){
+	public void cp(String src , String dst){
 		File SRC = new File(src);
 		File DST = new File(dst);
 		if (!SRC.exists()) { //If the source to be copied does not exist, null the variables and end with message
@@ -152,8 +152,38 @@ public class JShellSystem {
 						
 					}
 					response = null;
+				} else if (!DST.exists()) {
+					//File does not exist yet, create new file
+					try {
+						DST.createNewFile();
+						CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING , StandardCopyOption.COPY_ATTRIBUTES};
+						Files.copy(Paths.get(src) , Paths.get(dst) , options);
+					} catch(Exception ex) {
+						System.out.println("Error creating new file");
+					}
+				} else if (DST.exists() && DST.isDirectory()) {
+					//Copy src INTO dst directory
+					DST = null; //Null it!
+					DST = new File(dst + SRC.getName()); //New path with same name as SRC
+					try {
+						DST.createNewFile(); //Create new file
+						CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING , StandardCopyOption.COPY_ATTRIBUTES};
+						Files.copy(Paths.get(src) , Paths.get(DST.getAbsolutePath()) , options);
+					} catch (Exception e) {
+						System.out.println("Error creating new file");
+					}
 				}
 			}
+		}
+	}
+	
+	public void mv(String src , String dst){
+		cp(src , dst); //Copy it!
+		try {
+			File SRC = new File(src);
+			SRC.delete();
+		} catch(Exception e) {
+			System.out.println("Error deleting the source file");
 		}
 	}
 	

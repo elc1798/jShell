@@ -1,6 +1,8 @@
 import java.util.*;
 import java.io.*;
 
+import com.sun.org.apache.bcel.internal.Constants;
+
 public class Exec {
 
 //		System Variables
@@ -25,7 +27,7 @@ public class Exec {
 		String CONSOLEPREFIX = "";
 		
 		while (true) {
-			CONSOLEPREFIX = instance.currDir + "$ ";
+			CONSOLEPREFIX = CONSTANTS.ANSI_PURPLE + instance.currDir + "$ " + CONSTANTS.ANSI_RESET;
 			System.out.print(CONSOLEPREFIX.replaceFirst(CONSTANTS.HOMEDIR, "#HOME#"));
 			//Build input
 			buffer = "";
