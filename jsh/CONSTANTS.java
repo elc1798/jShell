@@ -8,6 +8,7 @@ public class CONSTANTS {
 	public static final String JSHRT		= HOMEDIR + DIRMARKER + ".jsh" + DIRMARKER;
 	public static final String JSHRC		= HOMEDIR + DIRMARKER + ".jshrc";
 	public static final String JVTMP		= JSHRT + "Tmp.java";
+	public static final String JVCLASS		= JSHRT + "Tmp.class";
 	public static final String JVRUN		= JSHRT + "Tmp";
 	
 	public static final String ANSI_RESET = "\u001B[0m";

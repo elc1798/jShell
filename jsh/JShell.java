@@ -101,6 +101,8 @@ public class JShell{
 			instance.cd(buffer.substring(3));
 		} else if (buffer.equalsIgnoreCase("ls")) {
 			instance.ls(instance.currDir);
+		} else if (buffer.equalsIgnoreCase("ls -a")) {
+			instance.lsShowHidden(instance.currDir);
 		} else if (buffer.startsWith("ls -a ")) {
 			instance.lsShowHidden(buffer.substring(6));
 		} else if (buffer.startsWith("ls ") && buffer.contains("..")) {

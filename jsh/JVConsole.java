@@ -28,9 +28,13 @@ public class JVConsole {
 			}
 		}
 		File JSHELLTMP = new File(CONSTANTS.JVTMP);
+		File JSHELLCLASS = new File(CONSTANTS.JVCLASS);
 		try {
 			JSHELLTMP.delete();	//Remove the file
 			JSHELLTMP.createNewFile(); //Recreate the file
+			JSHELLCLASS.delete();
+			JSHELLCLASS = null;
+			JSHELLTMP = null;
 		} catch(Exception e) {
 			System.out.println("Error creating the jShell Virtual Console");
 		}
