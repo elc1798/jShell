@@ -117,6 +117,19 @@ public class JShellSystem {
 		}
 	}
 	
+	public void rmFile(String path , String fileName){
+		try {
+			File TARGETFILE = new File(path + CONSTANTS.DIRMARKER + fileName);
+			if (TARGETFILE.exists()) {
+				TARGETFILE.delete();
+			} else {
+				System.out.println("File does not exist. Cannot Delete.");
+			}
+		} catch(Exception e){
+			System.out.println("Deleting file failed.");
+		}
+	}
+	
 	public void cp(String src , String dst){
 		File SRC = new File(src);
 		File DST = new File(dst);
