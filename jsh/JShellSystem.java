@@ -49,7 +49,21 @@ public class JShellSystem {
 	}
 	
 	public void ls(String path) {
-		JShell.subprocess("ls " + path);
+		String backup = currDir;
+		cd(path);
+		File[] files = new File(currDir).listFiles();
+		for (File file : files) {
+		    if (file.isDirectory()) {
+		        System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.isHidden()) {
+		    	System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
+		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else {
+		    	System.out.println(file.getName());
+		    }
+		}
+		currDir = backup;
 	}
 
 	public void crtFile(String path , String fileName){

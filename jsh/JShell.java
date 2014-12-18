@@ -14,7 +14,6 @@ public class JShell{
 		String stdout = "";
 		try {
 			p = console.exec(command);
-//			System.out.println("Subprocess opened");
 //			The below is the equivalent to System.console(), but I wanted it to work in IDEs as well so I used BufferedReader
 			BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			while ((stdout = stdin.readLine()) != null) {
@@ -39,6 +38,38 @@ public class JShell{
 		}
 	}
 
+	public static ArrayList<String> subprocessOutput(String command){
+		Process p = null;
+		String stdout = "";
+		ArrayList<String> give = new ArrayList<String>();
+		try {
+			p = console.exec(command);
+//			The below is the equivalent to System.console(), but I wanted it to work in IDEs as well so I used BufferedReader
+			BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((stdout = stdin.readLine()) != null) {
+				give.add(stdout);
+			}
+			System.out.println("\b");
+			stdin.close();
+		} catch(Exception e){
+			System.out.println("Subprocess '" + command + "' could not be executed.");
+			command = "compgen -ac | grep " + command.charAt(0);
+			try {
+				p = console.exec(command);
+	                        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				System.out.println("Did you mean: ");
+	                        while ((stdout = stdin.readLine()) != null) {
+	                                System.out.println(stdout);
+	                        }
+	                        stdin.close();
+			} catch(Exception ex) {
+				System.out.println("Possible command listing failed.");
+			}
+		}
+		return give;
+	}
+
+	
 	/**
 	 * @param buffer: The command to pass
 	 * @param instance: Shell System Access instance to modify
