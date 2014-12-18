@@ -1,6 +1,11 @@
 import java.util.*;
 import java.io.PrintWriter;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.CopyOption;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class JShellSystem {
 
@@ -48,6 +53,15 @@ public class JShellSystem {
 
 	}
 	
+	/*
+	 * The ls and lsShowHidden functions like ls -l or ls -al in bash
+	 * Coloring and priority goes as the following:
+	 * Hidden - Blue
+	 * Directory - Green
+	 * Executable - Yellow
+	 * Images - Red
+	 * Other Files - White
+	 */
 	public void ls(String path) {
 		String backup = currDir;
 		cd(path);
@@ -106,25 +120,36 @@ public class JShellSystem {
 	public void mv(String src , String dst){
 		File SRC = new File(src);
 		File DST = new File(dst);
-		if (!SRC.exists()) {
+		if (!SRC.exists()) { //If the source to be copied does not exist, null the variables and end with message
 			SRC = null;
 			DST = null;
 			System.out.println("Source path: " + src + " does not exist and cannot be moved.");
 		} else {
 			if (SRC.isFile()) {
-				if (DST.exists() && DST.isFile()) {
+				if (DST.exists() && DST.isFile()) { //File to file copying, confirm overwrites
 					System.out.println("Destination file (" + DST.getName() + ") contains data. Overwrite? ");
 					Scanner response = new Scanner(System.in);
 					boolean hasResponded = false;
 					while (!hasResponded) {
 						System.out.print("(Y / N): ");
+						
+//============================================================================================
+						
 						if (response.nextLine().equalsIgnoreCase("y")) {
 							hasResponded = true;
 							//Copy the file over
-							
+							try {
+								CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING , StandardCopyOption.COPY_ATTRIBUTES};
+								Files.copy(Paths.get(src) , Paths.get(dst) , options);
+							} catch (Exception e) {
+								System.out.println("Could not copy");
+							}
 						} else if (response.nextLine().equalsIgnoreCase("n")) {
 							hasResponded = true;
 						}
+						
+//============================================================================================
+						
 					}
 					response = null;
 				}

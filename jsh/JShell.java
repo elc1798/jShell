@@ -111,6 +111,14 @@ public class JShell{
 			instance.ls(buffer.substring(3));
 		} else if (buffer.equalsIgnoreCase("clear")) {
 			instance.clear();
+		} else if (buffer.startsWith("mv ")) {
+			//mv source destination
+			String[] params = buffer.split(" ");
+			if (params.length != 3) {
+				System.out.println("Syntax: mv srcFile dstFile");
+			} else {
+				instance.mv(instance.currDir + params[1] , instance.currDir + params[2]);
+			}
 		} else {
 			JShell.subprocess(buffer);
 		}
