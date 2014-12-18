@@ -5,8 +5,6 @@ Shell Written In Java, For Java
 
 # Features to be added:
 
-  - Persistent Java console, that resembles a Python console
-  
   - Persistent subprocess support
   
   - Tab completetion
@@ -16,6 +14,10 @@ Shell Written In Java, For Java
   - Text Highlighting
   
 # Current Features:
+
+## Version 0.02a
+
+  - Added Persistent Java console, that resembles a Python console
 
 ## Version 0.01a
 
