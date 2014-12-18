@@ -63,6 +63,15 @@ public class JVConsole {
 		contents.add(jvcInputStream);
 	}
 	
+	public void rmLast() {
+		contents.remove(contents.size() - 1);
+	}
+	
+	public void JVCFlush() {
+		contents = null;
+		contents = new ArrayList<String>();
+	}
+	
 	public void compile() {
 		try {
 			

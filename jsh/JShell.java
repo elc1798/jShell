@@ -38,31 +38,42 @@ public class JShell{
 			}
 		}
 	}
-	
+
 	/**
 	 * @param buffer: The command to pass
 	 * @param instance: Shell System Access instance to modify
+	 * @param cmd: Java Virtual Console instance to use
 	 */
-	
-	public static void processCommand(String buffer , JShellSystem instance) {
-		if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
+
+	public static void processCommand(String buffer , JShellSystem instance , JVConsole cmd) {
+		if (buffer.length() >= 5 && buffer.substring(0 , 5).equalsIgnoreCase("JSH~ ")) {
+			boolean compileJSHVC = true;
+			buffer = buffer.substring(5);
+			if (buffer.length() >= 13 && buffer.substring(0 , 13).equals("--no-compile ")) {
+				compileJSHVC = false;
+				buffer = buffer.substring(13);
+			}
+			if (buffer.charAt(buffer.length() - 1) != ';') {
+				buffer += ";";
+			}
+			cmd.console(buffer);
+			if (compileJSHVC) {
+				cmd.compile();
+			}
+		} else if (buffer.equalsIgnoreCase("JSHVC --flush")) {
+			cmd.JVCFlush();
+		} else if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
 			System.exit(0);
-		} else if (buffer.equalsIgnoreCase("cd")) {
+		} else if (buffer.equalsIgnoreCase("cd") || buffer.equalsIgnoreCase("cd ")) {
 			instance.cd(CONSTANTS.HOMEDIR);
 		} else if (buffer.contains("cd ")){
 			instance.cd(buffer.substring(3));
 		} else if (buffer.equalsIgnoreCase("ls")) {
 			instance.ls(instance.currDir);
 		} else if (buffer.contains("ls") && buffer.contains("..")) {
-			
+
 		} else if (buffer.contains("ls ")) {
 			instance.ls(buffer.substring(3));
-		} else if (buffer.length() >= 4) {
-			if (buffer.substring(0 , 4).toUpperCase().equals("JSH~")) {
-				buffer = buffer.substring(4);
-			} else {
-				JShell.subprocess(buffer);
-			}
 		} else {
 			JShell.subprocess(buffer);
 		}

@@ -20,14 +20,17 @@ public class Exec {
 
 		String buffer = null;
 		JShellSystem instance = new JShellSystem();
-
+		JVConsole cmd = new JVConsole();
+		String CONSOLEPREFIX = "";
+		
 		while (true) {
-			System.out.print(instance.currDir + "$ ");
+			CONSOLEPREFIX = instance.currDir + "$ "
+			System.out.print(CONSOLEPREFIX);
 			//Build input
 			buffer = "";
 //			System.out.println("Checkpoint");
 			buffer = inputStream.nextLine();
-			JShell.processCommand(buffer , instance);
+			JShell.processCommand(buffer , instance , cmd);
 		}
 	}
 }

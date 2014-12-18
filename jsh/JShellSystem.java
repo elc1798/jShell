@@ -8,6 +8,10 @@ public class JShellSystem {
 	
 	public String currDir = System.getProperty("user.dir");
 	
+	public JShellSystem() {
+		cd(CONSTANTS.HOMEDIR);
+	}
+	
 	public static boolean checkPathExistence(String path) {
 		File f = new File(path);
 		return (f.exists() && f.isDirectory());
