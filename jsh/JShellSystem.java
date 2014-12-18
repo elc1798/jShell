@@ -58,6 +58,8 @@ public class JShellSystem {
 		    	//Do nothing! Because we don't want to show hidden!
 		    } else if (file.isDirectory()) {
 		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.canExecute()) {
+		    	System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
 		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else {
@@ -76,7 +78,9 @@ public class JShellSystem {
 		    if (file.isHidden()) {
 		    	System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.isDirectory()) {
-		        System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    } else if (file.canExecute()) {
+		        System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
 		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else {
@@ -100,7 +104,32 @@ public class JShellSystem {
 	}
 	
 	public void mv(String src , String dst){
-		JShell.subprocess("mv " + src + " " + dst);
+		File SRC = new File(src);
+		File DST = new File(dst);
+		if (!SRC.exists()) {
+			SRC = null;
+			DST = null;
+			System.out.println("Source path: " + src + " does not exist and cannot be moved.");
+		} else {
+			if (SRC.isFile()) {
+				if (DST.exists() && DST.isFile()) {
+					System.out.println("Destination file (" + DST.getName() + ") contains data. Overwrite? ");
+					Scanner response = new Scanner(System.in);
+					boolean hasResponded = false;
+					while (!hasResponded) {
+						System.out.print("(Y / N): ");
+						if (response.nextLine().equalsIgnoreCase("y")) {
+							hasResponded = true;
+							//Copy the file over
+							
+						} else if (response.nextLine().equalsIgnoreCase("n")) {
+							hasResponded = true;
+						}
+					}
+					response = null;
+				}
+			}
+		}
 	}
 	
 	public void clear() {
