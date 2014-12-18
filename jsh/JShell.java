@@ -127,6 +127,12 @@ public class JShell{
 			} else {
 				instance.mv(instance.currDir + params[1] , instance.currDir + params[2]);
 			}
+		} else if (buffer.startsWith("touch ")) {
+			//mv source destination
+			String[] params = buffer.split(" ");
+			for (int i = 1; i < params.length; i++) {
+				instance.crtFile(instance.currDir , params[i]);
+			}
 		} else {
 			JShell.subprocess(buffer);
 		}
