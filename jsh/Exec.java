@@ -24,8 +24,8 @@ public class Exec {
 		String CONSOLEPREFIX = "";
 		
 		while (true) {
-			CONSOLEPREFIX = instance.currDir + "$ "
-			System.out.print(CONSOLEPREFIX);
+			CONSOLEPREFIX = instance.currDir + "$ ";
+			System.out.print(CONSOLEPREFIX.replaceFirst(CONSTANTS.HOMEDIR, "#HOME#"));
 			//Build input
 			buffer = "";
 //			System.out.println("Checkpoint");
