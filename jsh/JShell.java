@@ -171,6 +171,12 @@ public class JShell{
 			for (int i = 1; i < params.length; i++) {
 				instance.crtFile(instance.currDir , params[i]);
 			}
+		} else if (buffer.startsWith("mkdir ")) {
+			//mv source destination
+			String[] params = buffer.split(" ");
+			for (int i = 1; i < params.length; i++) {
+				instance.crtDir(instance.currDir , params[i]);
+			}
 		} else if (buffer.startsWith("rm ")) {
 			//mv source destination
 			String[] params = buffer.split(" ");

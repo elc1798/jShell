@@ -117,6 +117,19 @@ public class JShellSystem {
 		}
 	}
 	
+	public void crtDir(String path , String dirName){
+		try {
+			File NEWDIR = new File(path + CONSTANTS.DIRMARKER + dirName);
+			if (!NEWDIR.exists()) {
+				NEWDIR.mkdir();
+			} else {
+				System.out.println("File already exists. Cannot Create.");
+			}
+		} catch(Exception e){
+			System.out.println("Creating file failed.");
+		}
+	}
+	
 	public void rmFile(String path , String fileName){
 		try {
 			File TARGETFILE = new File(path + CONSTANTS.DIRMARKER + fileName);
