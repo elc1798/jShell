@@ -91,7 +91,9 @@ public class JShell{
 			if (compileJSHVC) {
 				cmd.compile();
 			}
-		} else if (buffer.equalsIgnoreCase("JSHVC --flush")) {
+		} else if (buffer.equalsIgnoreCase("JSH~")) {
+			cmd.compile();
+		} else if (buffer.equalsIgnoreCase("JSHVC --flush") || buffer.equalsIgnoreCase("jsh~ --flush")) {
 			cmd.JVCFlush();
 		} else if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
 			System.exit(0);

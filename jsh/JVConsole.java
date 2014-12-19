@@ -7,9 +7,20 @@ import java.io.BufferedWriter;
 public class JVConsole {
 	
 	public BufferedWriter jvtmp = null;
+	public ArrayList<String> imports = new ArrayList<String>();
 	public ArrayList<String> contents = new ArrayList<String>();
+	public ArrayList<String> methods = new ArrayList<String>();
 	private static final String CLASSPREFIX = "public class Tmp { public static void main(String[] args) {";
-	private static final String CLASSSUFFIX = "} }";
+	private static final String CLOSEBRACKET = "}";
+	
+	/*
+	 * The last thing added by the user:
+	 * 0 = an import
+	 * 1 = contents (in main)
+	 * 2 = a method
+	 */
+	
+	private int last = -1;
 	
 	public JVConsole() {
 		
@@ -63,12 +74,33 @@ public class JVConsole {
 		startVirtualShell();
 	}
 	
-	public void console(String jvcInputStream){
+	public void console(String jvcInputStream) {
 		contents.add(jvcInputStream);
+		last = 1;
 	}
 	
 	public void rmLast() {
-		contents.remove(contents.size() - 1);
+		switch (last) {
+		case 0:
+			imports.remove(imports.size() - 1);
+			break;
+		case 1:
+			contents.remove(contents.size() - 1);
+			break;
+		case 2:
+			methods.remove(methods.size() - 1);
+			break;
+		}
+	}
+	
+	public void addImport(String jvcInputStream) {
+		imports.add(jvcInputStream);
+		last = 0;
+	}
+	
+	public void addMethod(String jvcInputStream) {
+		methods.add(jvcInputStream);
+		last = 2;
 	}
 	
 	public void JVCFlush() {
@@ -78,12 +110,18 @@ public class JVConsole {
 	
 	public void compile() {
 		try {
-			
-			jvtmp.write(CLASSPREFIX);
-			for (int i = 0; i < contents.size(); i++) {
-				jvtmp.write(contents.get(i));
+			for (int i = 0; i < imports.size(); i++) {
+				jvtmp.write(imports.get(i));
 			}
-			jvtmp.write(CLASSSUFFIX);
+			jvtmp.write(CLASSPREFIX); //Start main
+			for (int i = 0; i < contents.size(); i++) {
+				jvtmp.write(contents.get(i)); //Insert into main
+			}
+			jvtmp.write(CLOSEBRACKET); //Close main
+			for (int i = 0; i < methods.size(); i++) {
+				jvtmp.write(methods.get(i)); //Add other methods
+			}
+			jvtmp.write(CLOSEBRACKET); //Close the file
 		} catch(Exception e) {
 			System.out.println("Java Virtual Console Writout failed.");
 		} finally {
