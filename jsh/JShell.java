@@ -92,30 +92,32 @@ public class JShell{
 				}
 				if (!buffer.contains("#import ")) {
 					System.out.println("Cannot import without #import");
-					break;
 				} else {
 					cmd.addImport(buffer);
 				}
 			} else if (!buffer.contains("--import ") && buffer.contains("--method ")) {
 				//Add a method
+				boolean validQuery = true;
 				buffer.replaceAll("--method " , "");
 				if (!buffer.contains("(")) {
 					System.out.println("Could not parse: ( missing");
-					break;
+					validQuery = false;
 				}
 				if (!buffer.contains(")")) {
 					System.out.println("Could not parse: ) missing");
-					break;
+					validQuery = false;
 				}
 				if (!buffer.contains("{")) {
 					System.out.println("Could not parse: { missing");
-					break;
+					validQuery = false;
 				}
 				if (!buffer.contains("}")) {
 					System.out.println("Could not parse: } missing");
-					break;
+					validQuery = false;
 				}
-				cmd.addMethod(buffer);
+				if (validQuery) {
+					cmd.addMethod(buffer);
+				}
 			} else if (!buffer.contains("--import ") && !buffer.contains("--method ")) {
 				if (buffer.charAt(buffer.length() - 1) != ';') {
 					buffer += ";";
