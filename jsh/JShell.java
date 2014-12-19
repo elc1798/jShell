@@ -79,15 +79,49 @@ public class JShell{
 	public static void processCommand(String buffer , JShellSystem instance , JVConsole cmd) {
 		if (buffer.length() >= 5 && buffer.substring(0 , 5).equalsIgnoreCase("JSH~ ")) {
 			boolean compileJSHVC = true;
-			buffer = buffer.substring(5);
-			if (buffer.length() >= 13 && buffer.substring(0 , 13).equals("--no-compile ")) {
+			buffer = buffer.substring(5); //Remove the jsh~ prefix, it's unnecessary
+			if (buffer.contains("--no-compile ")) {
 				compileJSHVC = false;
-				buffer = buffer.substring(13);
+				buffer.replaceAll("--no-compile " , "");
 			}
-			if (buffer.charAt(buffer.length() - 1) != ';') {
-				buffer += ";";
+			if (buffer.contains("--import ") && !buffer.contains("--method ")) {
+				//Add an import
+				buffer.replaceAll("--import ", "");
+				if (buffer.charAt(buffer.length() - 1) != ';') {
+					buffer += ";";
+				}
+				if (!buffer.contains("#import ")) {
+					System.out.println("Cannot import without #import");
+					break;
+				} else {
+					cmd.addImport(buffer);
+				}
+			} else if (!buffer.contains("--import ") && buffer.contains("--method ")) {
+				//Add a method
+				buffer.replaceAll("--method " , "");
+				if (!buffer.contains("(")) {
+					System.out.println("Could not parse: ( missing");
+					break;
+				}
+				if (!buffer.contains(")")) {
+					System.out.println("Could not parse: ) missing");
+					break;
+				}
+				if (!buffer.contains("{")) {
+					System.out.println("Could not parse: { missing");
+					break;
+				}
+				if (!buffer.contains("}")) {
+					System.out.println("Could not parse: } missing");
+					break;
+				}
+				cmd.addMethod(buffer);
+			} else if (!buffer.contains("--import ") && !buffer.contains("--method ")) {
+				if (buffer.charAt(buffer.length() - 1) != ';') {
+					buffer += ";";
+				}
+				cmd.addToMain(buffer);
 			}
-			cmd.console(buffer);
 			if (compileJSHVC) {
 				cmd.compile();
 			}

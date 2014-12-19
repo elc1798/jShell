@@ -159,6 +159,7 @@ public class JShellSystem {
 							}
 						} else if (response.nextLine().equalsIgnoreCase("n")) {
 							hasResponded = true;
+							break;
 						}
 						
 //============================================================================================

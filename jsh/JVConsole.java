@@ -74,7 +74,7 @@ public class JVConsole {
 		startVirtualShell();
 	}
 	
-	public void console(String jvcInputStream) {
+	public void addToMain(String jvcInputStream) {
 		contents.add(jvcInputStream);
 		last = 1;
 	}
