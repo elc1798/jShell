@@ -105,29 +105,27 @@ public class JVConsole {
 	
 	public void JVCFlush() {
 		contents = null;
+		imports = null;
+		methods = null;
 		contents = new ArrayList<String>();
+		imports = new ArrayList<String>();
+		methods = new ArrayList<String>();
 	}
 	
 	public void compile() {
 		try {
 			for (int i = 0; i < imports.size(); i++) {
 				jvtmp.write(imports.get(i));
-//				System.out.println(imports.get(i));
 			}
 			jvtmp.write(CLASSPREFIX); //Start main
-//			System.out.println(CLASSPREFIX);
 			for (int i = 0; i < contents.size(); i++) {
 				jvtmp.write(contents.get(i)); //Insert into main
-//				System.out.println(contents.get(i));
 			}
 			jvtmp.write(CLOSEBRACKET); //Close main
-//			System.out.println(CLOSEBRACKET);
 			for (int i = 0; i < methods.size(); i++) {
 				jvtmp.write(methods.get(i)); //Add other methods
-//				System.out.println(methods.get(i));
 			}
 			jvtmp.write(CLOSEBRACKET); //Close the file
-//			System.out.println(CLOSEBRACKET);
 		} catch(Exception e) {
 			System.out.println("Java Virtual Console Writout failed.");
 		} finally {
@@ -135,8 +133,44 @@ public class JVConsole {
 		}
 		JShell.subprocess("javac " + CONSTANTS.JVTMP);
 		JShell.subprocess("java -cp " + CONSTANTS.JSHRT + " Tmp");
-		//System.exit(0);
 		startVirtualShell();
+	}
+	
+	public void writeOut(File save) {
+		BufferedWriter DATADUMP = null;
+		if (!save.getName().contains(".java")) {
+			String bkup = save.getAbsolutePath();
+			save = null;
+			save = new File(bkup + ".java");
+		}
+		try {
+			DATADUMP = new BufferedWriter(new FileWriter(save , true));
+			for (int i = 0; i < imports.size(); i++) {
+				DATADUMP.write(imports.get(i));
+				DATADUMP.newLine();
+			}
+			DATADUMP.write("public class " + save.getName().substring(0 , save.getName().length() - 5) + " {");
+			DATADUMP.newLine();
+			DATADUMP.write("	public static void main(String[] args) {");
+			DATADUMP.newLine();
+			for (int i = 0; i < contents.size(); i++) {
+				DATADUMP.write("		" + contents.get(i)); //Insert into main
+				DATADUMP.newLine();
+			}
+			DATADUMP.write("	" + CLOSEBRACKET); //Close main
+			DATADUMP.newLine();
+			for (int i = 0; i < methods.size(); i++) {
+				DATADUMP.write("	" + methods.get(i)); //Add other methods
+				DATADUMP.newLine();
+			}
+			DATADUMP.write(CLOSEBRACKET); //Close the file
+			DATADUMP.newLine();
+			DATADUMP.close();
+		} catch(Exception e) {
+			System.out.println("Java Virtual Console Writout failed.");
+		} finally {
+			System.out.println("JVC Dump >>> " + save.getName() + " @ " + save.getParent());
+		}
 	}
 	
 /*

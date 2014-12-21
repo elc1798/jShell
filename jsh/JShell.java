@@ -26,12 +26,12 @@ public class JShell{
 			command = "compgen -ac | grep " + command.charAt(0);
 			try {
 				p = console.exec(command);
-	                        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				System.out.println("Did you mean: ");
-	                        while ((stdout = stdin.readLine()) != null) {
-	                                System.out.println(stdout);
-	                        }
-	                        stdin.close();
+				while ((stdout = stdin.readLine()) != null) {
+					System.out.println(stdout);
+				}
+				stdin.close();
 			} catch(Exception ex) {
 				System.out.println("Possible command listing failed.");
 			}
@@ -56,12 +56,12 @@ public class JShell{
 			command = "compgen -ac | grep " + command.charAt(0);
 			try {
 				p = console.exec(command);
-	                        BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				BufferedReader stdin = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				System.out.println("Did you mean: ");
-	                        while ((stdout = stdin.readLine()) != null) {
-	                                System.out.println(stdout);
-	                        }
-	                        stdin.close();
+				while ((stdout = stdin.readLine()) != null) {
+					System.out.println(stdout);
+				}
+				stdin.close();
 			} catch(Exception ex) {
 				System.out.println("Possible command listing failed.");
 			}
@@ -84,14 +84,28 @@ public class JShell{
 				compileJSHVC = false;
 				buffer = buffer.replace("--no-compile " , "");
 			}
-			if (buffer.contains("--import ") && !buffer.contains("--method ")) {
+			if (buffer.contains("--flush ")) {
+				cmd.JVCFlush();
+				compileJSHVC = false;
+				buffer = "";
+			}
+			if (buffer.toLowerCase().contains("--dump ")) {
+				buffer = buffer.replace("--dump " , "");
+				compileJSHVC = false;
+				if (buffer.charAt(0) == '/') {
+					cmd.writeOut(new File(buffer));
+				} else {
+					cmd.writeOut(new File(instance.currDir + CONSTANTS.DIRMARKER + buffer));
+				}
+			} else if (buffer.contains("--import ") && !buffer.contains("--method ")) {
 				//Add an import
 				buffer = buffer.replace("--import ", "");
 				if (buffer.charAt(buffer.length() - 1) != ';') {
 					buffer += ";";
 				}
-				if (!buffer.contains("import ")) {
-					System.out.println("Cannot import without `import` keyword");
+				if (!buffer.startsWith("import ")) {
+					System.out.println(CONSTANTS.ANSI_CYAN + "Automatically adding `import` keyword" + CONSTANTS.ANSI_RESET);
+					buffer = "import " + buffer;
 				} else {
 					cmd.addImport(buffer);
 				}
@@ -183,8 +197,10 @@ public class JShell{
 			for (int i = 1; i < params.length; i++) {
 				instance.rmFile(instance.currDir , params[i]);
 			}
-		} else {
+		} else if (buffer.length() > 0){ //Do not execute a 0 length string
 			JShell.subprocess(buffer);
+		} else {
+			// DO NOTHING!
 		}
 	}
 

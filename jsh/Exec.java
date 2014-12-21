@@ -25,13 +25,17 @@ public class Exec {
 		String CONSOLEPREFIX = "";
 		
 		while (true) {
-			CONSOLEPREFIX = CONSTANTS.ANSI_PURPLE + instance.currDir + "$ " + CONSTANTS.ANSI_RESET;
-			System.out.print(CONSOLEPREFIX.replaceFirst(CONSTANTS.HOMEDIR, "#HOME#"));
-			//Build input
-			buffer = "";
-//			System.out.println("Checkpoint");
-			buffer = inputStream.nextLine();
-			JShell.processCommand(buffer , instance , cmd);
+			try {
+				CONSOLEPREFIX = CONSTANTS.ANSI_PURPLE + instance.currDir + "$ " + CONSTANTS.ANSI_RESET;
+				System.out.print(CONSOLEPREFIX.replaceFirst(CONSTANTS.HOMEDIR, "#HOME#"));
+				//Build input
+				buffer = "";
+//				System.out.println("Checkpoint");
+				buffer = inputStream.nextLine();
+				JShell.processCommand(buffer , instance , cmd);
+			} catch(Exception e) {
+				//DO NOTHING!
+			}
 		}
 	}
 }
