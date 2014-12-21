@@ -7,11 +7,19 @@ Shell Written In Java, For Java
 
   - Persistent subprocess support
   
-  - Tab completetion
+  - Tab completion
   
   - Ctrl-C , Ctrl-D kill process key stroke
   
 # Current Features:
+
+## Version 0.10a
+
+  - Added more stability and exception pkills
+  - JVC now automatically adds 'import' at the beginning of the --import flag if it isn't there
+  - Added JVC file writeout to save JVC contents
+  - Fixed bug where jsh~ --flush wasn't working, when jshvc --flush was
+  - No longer tries to execute commands of 0 length strings
 
 ## Version 0.03a
 
