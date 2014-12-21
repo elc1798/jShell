@@ -112,16 +112,22 @@ public class JVConsole {
 		try {
 			for (int i = 0; i < imports.size(); i++) {
 				jvtmp.write(imports.get(i));
+//				System.out.println(imports.get(i));
 			}
 			jvtmp.write(CLASSPREFIX); //Start main
+//			System.out.println(CLASSPREFIX);
 			for (int i = 0; i < contents.size(); i++) {
 				jvtmp.write(contents.get(i)); //Insert into main
+//				System.out.println(contents.get(i));
 			}
 			jvtmp.write(CLOSEBRACKET); //Close main
+//			System.out.println(CLOSEBRACKET);
 			for (int i = 0; i < methods.size(); i++) {
 				jvtmp.write(methods.get(i)); //Add other methods
+//				System.out.println(methods.get(i));
 			}
 			jvtmp.write(CLOSEBRACKET); //Close the file
+//			System.out.println(CLOSEBRACKET);
 		} catch(Exception e) {
 			System.out.println("Java Virtual Console Writout failed.");
 		} finally {
@@ -129,6 +135,7 @@ public class JVConsole {
 		}
 		JShell.subprocess("javac " + CONSTANTS.JVTMP);
 		JShell.subprocess("java -cp " + CONSTANTS.JSHRT + " Tmp");
+		//System.exit(0);
 		startVirtualShell();
 	}
 	

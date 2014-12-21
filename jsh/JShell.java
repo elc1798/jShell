@@ -82,23 +82,23 @@ public class JShell{
 			buffer = buffer.substring(5); //Remove the jsh~ prefix, it's unnecessary
 			if (buffer.contains("--no-compile ")) {
 				compileJSHVC = false;
-				buffer.replaceAll("--no-compile " , "");
+				buffer = buffer.replace("--no-compile " , "");
 			}
 			if (buffer.contains("--import ") && !buffer.contains("--method ")) {
 				//Add an import
-				buffer.replaceAll("--import ", "");
+				buffer = buffer.replace("--import ", "");
 				if (buffer.charAt(buffer.length() - 1) != ';') {
 					buffer += ";";
 				}
-				if (!buffer.contains("#import ")) {
-					System.out.println("Cannot import without #import");
+				if (!buffer.contains("import ")) {
+					System.out.println("Cannot import without `import` keyword");
 				} else {
 					cmd.addImport(buffer);
 				}
 			} else if (!buffer.contains("--import ") && buffer.contains("--method ")) {
 				//Add a method
 				boolean validQuery = true;
-				buffer.replaceAll("--method " , "");
+				buffer = buffer.replace("--method " , "");
 				if (!buffer.contains("(")) {
 					System.out.println("Could not parse: ( missing");
 					validQuery = false;
