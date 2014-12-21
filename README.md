@@ -16,7 +16,7 @@ Shell Written In Java, For Java
 ## Version 0.03a
 
   - JVC now has --import, --no-compile, and --method flags:
-      ```java
+      ```
       JShell loading... 
       OS Detected: Linux running on amd64 architecture
       Home Directory: /home/sublimau5
