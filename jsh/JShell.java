@@ -84,13 +84,25 @@ public class JShell{
 				compileJSHVC = false;
 				buffer = buffer.replace("--no-compile " , "");
 			}
-			if (buffer.contains("--flush ")) {
+			if (buffer.contains("--flush")) {
+				System.out.println(CONSTANTS.ANSI_CYAN + "JVC contents flushed" + CONSTANTS.ANSI_RESET);
 				cmd.JVCFlush();
 				compileJSHVC = false;
 				buffer = "";
-			}
-			if (buffer.toLowerCase().contains("--dump ")) {
+			} else if (buffer.contains("--show")) {
+				System.out.println(CONSTANTS.ANSI_CYAN + "JVC contents: " + CONSTANTS.ANSI_RESET);
+				cmd.show();
+				compileJSHVC = false;
+				buffer = "";
+			} else if (buffer.contains("--undo")) {
+				System.out.println(CONSTANTS.ANSI_CYAN + "JVC last move undone" + CONSTANTS.ANSI_RESET);
+				cmd.rmLast();
+				compileJSHVC = false;
+				buffer = "";
+			} else if (buffer.toLowerCase().contains("--dump ")) {
+				System.out.println(CONSTANTS.ANSI_CYAN + "JVC contents dumped." + CONSTANTS.ANSI_RESET);
 				buffer = buffer.replace("--dump " , "");
+				buffer = buffer.replace("--DUMP " , "");
 				compileJSHVC = false;
 				if (buffer.charAt(0) == '/') {
 					cmd.writeOut(new File(buffer));
@@ -106,33 +118,27 @@ public class JShell{
 				if (!buffer.startsWith("import ")) {
 					System.out.println(CONSTANTS.ANSI_CYAN + "Automatically adding `import` keyword" + CONSTANTS.ANSI_RESET);
 					buffer = "import " + buffer;
+					cmd.addImport(buffer);
 				} else {
 					cmd.addImport(buffer);
 				}
 			} else if (!buffer.contains("--import ") && buffer.contains("--method ")) {
 				//Add a method
-				boolean validQuery = true;
 				buffer = buffer.replace("--method " , "");
 				if (!buffer.contains("(")) {
-					System.out.println("Could not parse: ( missing");
-					validQuery = false;
+					System.out.println(CONSTANTS.ANSI_YELLOW + "Warning: ( missing from parameter block" + CONSTANTS.ANSI_RESET);
 				}
 				if (!buffer.contains(")")) {
-					System.out.println("Could not parse: ) missing");
-					validQuery = false;
+					System.out.println(CONSTANTS.ANSI_YELLOW + "Warning: ) missing from parameter block" + CONSTANTS.ANSI_RESET);
 				}
 				if (!buffer.contains("{")) {
-					System.out.println("Could not parse: { missing");
-					validQuery = false;
+					System.out.println(CONSTANTS.ANSI_YELLOW + "Warning: { missing from code block start" + CONSTANTS.ANSI_RESET);
 				}
 				if (!buffer.contains("}")) {
-					System.out.println("Could not parse: } missing");
-					validQuery = false;
+					System.out.println(CONSTANTS.ANSI_YELLOW + "Warning: } missing from code block end" + CONSTANTS.ANSI_RESET);
 				}
-				if (validQuery) {
-					cmd.addMethod(buffer);
-				}
-			} else if (!buffer.contains("--import ") && !buffer.contains("--method ")) {
+				cmd.addMethod(buffer);
+			} else if (!buffer.contains("--import ") && !buffer.contains("--method ") && buffer.length() > 0) {
 				if (buffer.charAt(buffer.length() - 1) != ';') {
 					buffer += ";";
 				}
@@ -141,9 +147,10 @@ public class JShell{
 			if (compileJSHVC) {
 				cmd.compile();
 			}
-		} else if (buffer.equalsIgnoreCase("JSH~")) {
+		} else if (buffer.equalsIgnoreCase("JSH~") || buffer.equalsIgnoreCase("JSH~ ")) {
+			System.out.println(CONSTANTS.ANSI_CYAN + "Compiling Java Virtual Console contents..." + CONSTANTS.ANSI_RESET);
 			cmd.compile();
-		} else if (buffer.equalsIgnoreCase("JSHVC --flush") || buffer.equalsIgnoreCase("jsh~ --flush")) {
+		} else if (buffer.equalsIgnoreCase("JSHVC --flush")) {
 			cmd.JVCFlush();
 		} else if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
 			System.exit(0);

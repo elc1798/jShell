@@ -78,7 +78,13 @@ public class JShellSystem {
 		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.canExecute()) {
 		    	System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
+		    } else if (file.getName().endsWith(".png") || 
+		    		file.getName().endsWith(".jpg") || 
+		    		file.getName().endsWith(".jpeg") ||
+		    		file.getName().endsWith(".mp4") ||
+		    		file.getName().endsWith(".mp3") ||
+		    		file.getName().endsWith(".mkv")
+		    		) {
 		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else {
 		    	System.out.println(file.getName());
@@ -99,7 +105,13 @@ public class JShellSystem {
 		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.canExecute()) {
 		        System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else if (file.getName().endsWith(".png") || file.getName().endsWith(".jpg") || file.getName().endsWith(".jpeg")) {
+		    } else if (file.getName().endsWith(".png") || 
+		    		file.getName().endsWith(".jpg") || 
+		    		file.getName().endsWith(".jpeg") ||
+		    		file.getName().endsWith(".mp4") ||
+		    		file.getName().endsWith(".mp3") ||
+		    		file.getName().endsWith(".mkv")
+		    		) {
 		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else {
 		    	System.out.println(file.getName());

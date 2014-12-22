@@ -136,6 +136,26 @@ public class JVConsole {
 		startVirtualShell();
 	}
 	
+	public void show() {
+		try {
+			for (int i = 0; i < imports.size(); i++) {
+				System.out.println(imports.get(i));
+			}
+			System.out.println("public class JVC {");
+			System.out.println("	public static void main(String[] args) {");
+			for (int i = 0; i < contents.size(); i++) {
+				System.out.println("		" + contents.get(i)); //Insert into main
+			}
+			System.out.println("	" + CLOSEBRACKET); //Close main
+			for (int i = 0; i < methods.size(); i++) {
+				System.out.println("	" + methods.get(i)); //Add other methods
+			}
+			System.out.println(CLOSEBRACKET); //Close the file
+		} catch(Exception e) {
+			System.out.println("Java Virtual Console Writout failed.");
+		}
+	}
+	
 	public void writeOut(File save) {
 		BufferedWriter DATADUMP = null;
 		if (!save.getName().contains(".java")) {
