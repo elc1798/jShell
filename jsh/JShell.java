@@ -109,6 +109,11 @@ public class JShell{
 				} else {
 					cmd.writeOut(new File(instance.currDir + CONSTANTS.DIRMARKER + buffer));
 				}
+			} else if (buffer.contains("--dump") || buffer.contains("--DUMP")) {
+				System.out.println(CONSTANTS.ANSI_CYAN + "JVC contents dumped." + CONSTANTS.ANSI_RESET);
+				compileJSHVC = false;
+				cmd.writeOut(new File(instance.currDir + CONSTANTS.DIRMARKER + "JVC"));
+				buffer = "";
 			} else if (buffer.contains("--import ") && !buffer.contains("--method ")) {
 				//Add an import
 				buffer = buffer.replace("--import ", "");
@@ -203,6 +208,13 @@ public class JShell{
 			String[] params = buffer.split(" ");
 			for (int i = 1; i < params.length; i++) {
 				instance.rmFile(instance.currDir , params[i]);
+			}
+		} else if (buffer.startsWith("cat ")) {
+			//mv source destination
+			String[] params = buffer.split(" ");
+			for (int i = 1; i < params.length; i++) {
+				System.out.println(CONSTANTS.ANSI_CYAN + params[i] + CONSTANTS.ANSI_RESET);
+				instance.cat(instance.currDir + CONSTANTS.DIRMARKER + params[i]);
 			}
 		} else if (buffer.length() > 0){ //Do not execute a 0 length string
 			JShell.subprocess(buffer);

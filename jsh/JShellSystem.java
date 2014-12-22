@@ -220,6 +220,19 @@ public class JShellSystem {
 		}
 	}
 	
+	public void cat(String src) {
+		//src is full path
+		try {
+			Scanner output = new Scanner(new File(src));
+			while (output.hasNext()) {
+				System.out.println(output.nextLine());
+			}
+			output = null;
+		} catch(Exception e) {
+			System.out.println("File " + src + "does not exist.");
+		}
+	}
+	
 	public void mv(String src , String dst){
 		cp(src , dst); //Copy it!
 		try {
