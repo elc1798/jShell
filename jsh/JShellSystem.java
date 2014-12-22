@@ -51,6 +51,10 @@ public class JShellSystem {
 			currDir = dirBackup;
 		}
 
+		if (currDir.length() == 0) {
+			currDir = CONSTANTS.DIRMARKER;
+		}
+		
 	}
 	
 	/*
