@@ -8,20 +8,21 @@ import java.nio.file.StandardCopyOption;
 public class JShellSystem {
 
 	// Container for a session of JShell, accessing system for directory moving and access
-	
+
 	public String currDir = System.getProperty("user.dir");
-	
+
 	public JShellSystem() {
 		cd(CONSTANTS.HOMEDIR);
 	}
-	
+
 	public static boolean checkPathExistence(String path) {
 		File f = new File(path);
 		return (f.exists() && f.isDirectory());
 	}
-	
+
 	public void cd(String path) {
 
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		String dirBackup = currDir;
 		String[] splitPath = path.split(CONSTANTS.DIRMARKER);	//Split path based on the marker directory marker
 		if (path.charAt(0) == CONSTANTS.DIRMARKER.charAt(0)) {
@@ -35,7 +36,7 @@ public class JShellSystem {
 					for (int k = currDir.length() - 1; !currDir.substring(k , k + 1).equals(CONSTANTS.DIRMARKER); k--) {
 						currDir = currDir.substring(0 , k);
 					}
-//				} else if () {
+					//				} else if () {
 
 				} else {
 					currDir += splitPath[i] + CONSTANTS.DIRMARKER;
@@ -45,16 +46,16 @@ public class JShellSystem {
 				}
 			}
 		} catch(Exception e) {
-			System.out.println(path + " does not exist");
+			System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] " + path + " does not exist");
 			currDir = dirBackup;
 		}
 
 		if (currDir.length() == 0) {
 			currDir = CONSTANTS.DIRMARKER;
 		}
-		
+
 	}
-	
+
 	/*
 	 * The ls and lsShowHidden functions like ls -l or ls -al in bash
 	 * Coloring and priority goes as the following:
@@ -65,100 +66,120 @@ public class JShellSystem {
 	 * Other Files - White
 	 */
 	public void ls(String path) {
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		String backup = currDir;
 		cd(path);
 		File[] files = new File(currDir).listFiles();
 		Arrays.sort(files);
 		for (File file : files) {
-		    if (file.isHidden()) {
-		    	//Do nothing! Because we don't want to show hidden!
-		    } else if (file.isDirectory()) {
-		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
-		    } else if (file.canExecute()) {
-		    	System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
-		    	
-		    } else if (file.getName().endsWith(".png") || 
-		    		file.getName().endsWith(".jpg") || 
-		    		file.getName().endsWith(".jpeg") ||
-		    		file.getName().endsWith(".mp4") ||
-		    		file.getName().endsWith(".mp3") ||
-		    		file.getName().endsWith(".mkv")
-		    		) {
-		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else {
-		    	System.out.println(file.getName());
-		    }
+			if (file.isHidden()) {
+				//Do nothing! Because we don't want to show hidden!
+			} else if (file.isDirectory()) {
+				System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
+			} else if (file.canExecute()) {
+				System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
+
+			} else if (file.getName().endsWith(".png") || 
+					file.getName().endsWith(".jpg") || 
+					file.getName().endsWith(".jpeg") ||
+					file.getName().endsWith(".mp4") ||
+					file.getName().endsWith(".mp3") ||
+					file.getName().endsWith(".mkv")
+					) {
+				System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
+			} else {
+				System.out.println(file.getName());
+			}
 		}
 		currDir = backup;
 	}
-	
+
 	public void lsShowHidden(String path) {
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		String backup = currDir;
 		cd(path);
 		File[] files = new File(currDir).listFiles();
 		Arrays.sort(files);
 		for (File file : files) {
-		    if (file.isHidden()) {
-		    	System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else if (file.isDirectory()) {
-		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
-		    } else if (file.canExecute()) {
-		        System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
-		    } else if (file.getName().endsWith(".png") || 
-		    		file.getName().endsWith(".jpg") || 
-		    		file.getName().endsWith(".jpeg") ||
-		    		file.getName().endsWith(".mp4") ||
-		    		file.getName().endsWith(".mp3") ||
-		    		file.getName().endsWith(".mkv")
-		    		) {
-		    	System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
-		    } else {
-		    	System.out.println(file.getName());
-		    }
+			if (file.isHidden()) {
+				System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
+			} else if (file.isDirectory()) {
+				System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
+			} else if (file.canExecute()) {
+				System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
+			} else if (file.getName().endsWith(".png") || 
+					file.getName().endsWith(".jpg") || 
+					file.getName().endsWith(".jpeg") ||
+					file.getName().endsWith(".mp4") ||
+					file.getName().endsWith(".mp3") ||
+					file.getName().endsWith(".mkv")
+					) {
+				System.out.println(CONSTANTS.ANSI_RED + file.getName() + CONSTANTS.ANSI_RESET);
+			} else {
+				System.out.println(file.getName());
+			}
 		}
 		currDir = backup;
 	}
 
 	public void crtFile(String path , String fileName){
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		try {
 			File NEWFILE = new File(path + CONSTANTS.DIRMARKER + fileName);
 			if (!NEWFILE.exists()) {
 				NEWFILE.createNewFile();
 			} else {
-				System.out.println("File already exists. Cannot Create.");
+				System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] File already exists. Cannot Create.");
 			}
 		} catch(Exception e){
 			System.out.println("Creating file failed.");
 		}
 	}
-	
+
 	public void crtDir(String path , String dirName){
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		try {
 			File NEWDIR = new File(path + CONSTANTS.DIRMARKER + dirName);
 			if (!NEWDIR.exists()) {
 				NEWDIR.mkdir();
 			} else {
-				System.out.println("File already exists. Cannot Create.");
+				System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] File already exists. Cannot Create.");
 			}
 		} catch(Exception e){
 			System.out.println("Creating file failed.");
 		}
 	}
-	
+
 	public void rmFile(String path , String fileName){
+		path = path.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		try {
 			File TARGETFILE = new File(path + CONSTANTS.DIRMARKER + fileName);
 			if (TARGETFILE.exists()) {
-				TARGETFILE.delete();
+				System.out.println("Confirm deletion of " + fileName + " (Y/N)");
+				String response = Exec.inputStream.next().toUpperCase();
+				boolean valid = false;
+				while (!valid) {
+					if (response.equals("Y")) {
+						valid = true;
+						TARGETFILE.delete();
+						System.out.println("[" + CONSTANTS.ANSI_GREEN + " SUCCESS " + CONSTANTS.ANSI_RESET + "]" + fileName + " was deleted.");
+					} else if (response.equals("N")) {
+						valid = true;
+						System.out.println("[" + CONSTANTS.ANSI_YELLOW + " ERROR " + CONSTANTS.ANSI_RESET + "] Aborted.");
+					} else {
+						System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] Invalid response.");
+					}
+				}
 			} else {
-				System.out.println("File does not exist. Cannot Delete.");
+				System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] " + "File does not exist. Cannot Delete.");
 			}
 		} catch(Exception e){
 			System.out.println("Deleting file failed.");
 		}
 	}
-	
+
 	public void cp(String src , String dst){
+		src = src.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		File SRC = new File(src);
 		File DST = new File(dst);
 		if (!SRC.exists()) { //If the source to be copied does not exist, null the variables and end with message
@@ -173,9 +194,9 @@ public class JShellSystem {
 					boolean hasResponded = false;
 					while (!hasResponded) {
 						System.out.print("(Y / N): ");
-						
-//============================================================================================
-						
+
+						//============================================================================================
+
 						if (response.nextLine().equalsIgnoreCase("y")) {
 							hasResponded = true;
 							//Copy the file over
@@ -189,9 +210,9 @@ public class JShellSystem {
 							hasResponded = true;
 							break;
 						}
-						
-//============================================================================================
-						
+
+						//============================================================================================
+
 					}
 					response.close();
 					response = null;
@@ -213,14 +234,15 @@ public class JShellSystem {
 						CopyOption[] options = new CopyOption[]{StandardCopyOption.REPLACE_EXISTING , StandardCopyOption.COPY_ATTRIBUTES};
 						Files.copy(Paths.get(src) , Paths.get(DST.getAbsolutePath()) , options);
 					} catch (Exception e) {
-						System.out.println("Error creating new file");
+						System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] Error creating new file");
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void cat(String src) {
+		src = src.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		//src is full path
 		try {
 			Scanner output = new Scanner(new File(src));
@@ -230,22 +252,24 @@ public class JShellSystem {
 			output.close();
 			output = null;
 		} catch(Exception e) {
-			System.out.println("File " + src + "does not exist.");
+			System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] File " + src + " does not exist.");
 		}
 	}
-	
+
 	public void mv(String src , String dst){
+		src = src.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
+		dst = dst.replace("~" + CONSTANTS.DIRMARKER , CONSTANTS.HOMEDIR + CONSTANTS.DIRMARKER);
 		cp(src , dst); //Copy it!
 		try {
 			File SRC = new File(src);
 			SRC.delete();
 		} catch(Exception e) {
-			System.out.println("Error deleting the source file");
+			System.out.println("[" + CONSTANTS.ANSI_RED + " ERROR " + CONSTANTS.ANSI_RESET + "] Error deleting the source file");
 		}
 	}
-	
+
 	public void clear() {
 		System.out.print("\033\143");
 	}
-	
+
 }

@@ -77,6 +77,7 @@ public class JShell{
 	 */
 
 	public static void processCommand(String buffer , JShellSystem instance , JVConsole cmd) {
+		buffer = buffer.trim();
 		if (buffer.length() >= 5 && buffer.substring(0 , 5).equalsIgnoreCase("JSH~ ")) {
 			boolean compileJSHVC = true;
 			buffer = buffer.substring(5); //Remove the jsh~ prefix, it's unnecessary
@@ -159,7 +160,7 @@ public class JShell{
 			cmd.JVCFlush();
 		} else if (buffer.equalsIgnoreCase("quit") || buffer.equalsIgnoreCase("exit")) {
 			System.exit(0);
-		} else if (buffer.equalsIgnoreCase("cd") || buffer.equalsIgnoreCase("cd ")) {
+		} else if (buffer.equalsIgnoreCase("cd") || buffer.equalsIgnoreCase("cd ~")) {
 			instance.cd(CONSTANTS.HOMEDIR);
 		} else if (buffer.contains("cd ")){
 			instance.cd(buffer.substring(3));
@@ -213,8 +214,8 @@ public class JShell{
 			//mv source destination
 			String[] params = buffer.split(" ");
 			for (int i = 1; i < params.length; i++) {
-				System.out.println(CONSTANTS.ANSI_CYAN + params[i] + CONSTANTS.ANSI_RESET);
-				instance.cat(instance.currDir + CONSTANTS.DIRMARKER + params[i]);
+				System.out.println(CONSTANTS.ANSI_CYAN + params[i] + CONSTANTS.ANSI_RESET + " : ");
+				instance.cat(instance.currDir + params[i]);
 			}
 		} else if (buffer.length() > 0){ //Do not execute a 0 length string
 			JShell.subprocess(buffer);

@@ -4,7 +4,7 @@ public class Exec {
 
 //		System Variables
 
-	private static Scanner inputStream = new Scanner(System.in);
+	public static Scanner inputStream = new Scanner(System.in);
 
 	public static void main(String[] args) {
 
@@ -32,6 +32,7 @@ public class Exec {
 //				System.out.println("Checkpoint");
 				buffer = inputStream.nextLine();
 				JShell.processCommand(buffer , instance , cmd);
+				System.gc();
 			} catch(Exception e) {
 				//DO NOTHING!
 			}
