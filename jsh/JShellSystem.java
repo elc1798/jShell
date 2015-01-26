@@ -1,10 +1,8 @@
 import java.util.*;
-import java.io.PrintWriter;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.CopyOption;
 import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 public class JShellSystem {
@@ -75,9 +73,10 @@ public class JShellSystem {
 		    if (file.isHidden()) {
 		    	//Do nothing! Because we don't want to show hidden!
 		    } else if (file.isDirectory()) {
-		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
 		    } else if (file.canExecute()) {
-		    	System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
+		    	System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
+		    	
 		    } else if (file.getName().endsWith(".png") || 
 		    		file.getName().endsWith(".jpg") || 
 		    		file.getName().endsWith(".jpeg") ||
@@ -102,9 +101,9 @@ public class JShellSystem {
 		    if (file.isHidden()) {
 		    	System.out.println(CONSTANTS.ANSI_BLUE + file.getName() + CONSTANTS.ANSI_RESET);
 		    } else if (file.isDirectory()) {
-		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET);
+		    	System.out.println(CONSTANTS.ANSI_GREEN + file.getName() + CONSTANTS.ANSI_RESET + "/");
 		    } else if (file.canExecute()) {
-		        System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET);
+		        System.out.println(CONSTANTS.ANSI_YELLOW + file.getName() + CONSTANTS.ANSI_RESET + " >> is executable");
 		    } else if (file.getName().endsWith(".png") || 
 		    		file.getName().endsWith(".jpg") || 
 		    		file.getName().endsWith(".jpeg") ||
@@ -194,6 +193,7 @@ public class JShellSystem {
 //============================================================================================
 						
 					}
+					response.close();
 					response = null;
 				} else if (!DST.exists()) {
 					//File does not exist yet, create new file
@@ -227,6 +227,7 @@ public class JShellSystem {
 			while (output.hasNext()) {
 				System.out.println(output.nextLine());
 			}
+			output.close();
 			output = null;
 		} catch(Exception e) {
 			System.out.println("File " + src + "does not exist.");

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-javac jsh/*.java
-mv jsh/*.class jsh/COMPILED/
-cd jsh/COMPILED
-java Exec

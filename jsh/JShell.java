@@ -63,13 +63,13 @@ public class JShell{
 				}
 				stdin.close();
 			} catch(Exception ex) {
-				System.out.println("Possible command listing failed.");
+//				System.out.println("Possible command listing failed.");
 			}
 		}
 		return give;
 	}
 
-	
+
 	/**
 	 * @param buffer: The command to pass
 	 * @param instance: Shell System Access instance to modify
