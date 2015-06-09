@@ -18,6 +18,14 @@ public class DirectoryTree {
         return new TOUCH(this , dest).EXECUTE();
     }
 
+    public int rm(String file) {
+        return new RM(this , file).EXECUTE();
+    }
+
+    public int cp(String src , String dst) {
+        return new CP(this , src , dst).EXECUTE();
+    }
+
     public String getWorkingDirectory() {
         return WORKING_DIR;
     }

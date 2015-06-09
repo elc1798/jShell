@@ -23,12 +23,10 @@ public class CP extends ShellCommand {
     private String SRC_PATH;
     private String DEST_PATH;
     private String backup;
-    private boolean isDirectory;
 
-    public CP(DirectoryTree dir , String src , String dst , boolean isDir) {
+    public CP(DirectoryTree dir , String src , String dst) {
         dir_tree = dir;
         SRC_PATH = src;
-        DEST_PATH = dst;
     }
 
     @Override
@@ -39,23 +37,11 @@ public class CP extends ShellCommand {
         if (!SRC_PATH.startsWith(DIRMARKER)) {
             SRC_PATH = dir_tree.getWorkingDirectory() + SRC_PATH;
         }
-        if (!isDirectory && SRC_PATH.endsWith(DIRMARKER)) {
-            throw new JShellDirectoryIsNotAFileException();
-        }
-        if (isDirectory && !SRC_PATH.endsWith(DIRMARKER)) {
-            SRC_PATH += DIRMARKER;
-        }
         if (DEST_PATH.startsWith(HOMEMARKER)) {
             DEST_PATH = HOMEDIR + DEST_PATH.substring(1);
         }
         if (!DEST_PATH.startsWith(DIRMARKER)) {
             DEST_PATH = dir_tree.getWorkingDirectory() + DEST_PATH;
-        }
-        if (!isDirectory && DEST_PATH.endsWith(DIRMARKER)) {
-            throw new JShellDirectoryIsNotAFileException();
-        }
-        if (isDirectory && !DEST_PATH.endsWith(DIRMARKER)) {
-            DEST_PATH += DIRMARKER;
         }
         // Backup Files
         if (new File(DEST_PATH).exists()) {
