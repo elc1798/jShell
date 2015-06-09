@@ -10,6 +10,7 @@ public class CONSTANTS {
     public static final String ROOT_DIR     = "/";
     public static final String HOMEMARKER   = "~";
     public static final String ASCEND_DIR   = "..";
+    public static final String JSH_TEMP     = "/tmp/JSHELL/";
     public static final String JSHRT        = HOMEDIR + DIRMARKER + ".jsh" + DIRMARKER;
     public static final String JSHRC        = HOMEDIR + DIRMARKER + ".jshrc";
     public static final String JVTMP        = JSHRT + "Tmp.java";
