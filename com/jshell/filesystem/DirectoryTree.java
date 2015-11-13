@@ -7,23 +7,28 @@ public class DirectoryTree {
     private static String WORKING_DIR;
 
     public DirectoryTree() {
-        setWorkingDirectory(System.getProperty("user.dir")); // Ensures it starts with an absolute path
+        // Ensures it starts with an absolute path
+        setWorkingDirectory(System.getProperty("user.dir"));
     }
 
     public int cd(String dest) {
-        return new CD(this , getWorkingDirectory() , dest).EXECUTE();
+        return new CD(this, getWorkingDirectory(), dest).EXECUTE();
     }
 
     public int touch(String dest) {
-        return new TOUCH(this , dest).EXECUTE();
+        return new TOUCH(this, dest).EXECUTE();
     }
 
     public int rm(String file) {
-        return new RM(this , file).EXECUTE();
+        return new RM(this, file).EXECUTE();
     }
 
-    public int cp(String src , String dst) {
-        return new CP(this , src , dst).EXECUTE();
+    public int cp(String src, String dst) {
+        return new CP(this, src, dst).EXECUTE();
+    }
+
+    public int mv(String src, String dst) {
+        return new MV(this, src, dst).EXECUTE();
     }
 
     public String getWorkingDirectory() {

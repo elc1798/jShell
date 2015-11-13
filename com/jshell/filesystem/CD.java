@@ -2,6 +2,7 @@ package com.jshell.filesystem;
 
 import static com.jshell.CONSTANTS.*;
 
+import com.jshell.ShellCommand;
 import com.jshell.errors.JShellInvalidPathException;
 
 import java.io.File;

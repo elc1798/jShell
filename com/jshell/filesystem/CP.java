@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.jshell.ShellCommand;
 import com.jshell.IO.STDIN;
 import com.jshell.IO.STDOUT;
 import com.jshell.errors.JShellDirectoryIsNotAFileException;

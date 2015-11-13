@@ -7,6 +7,7 @@ import static com.jshell.CONSTANTS.HOMEMARKER;
 import java.io.File;
 import java.io.IOException;
 
+import com.jshell.ShellCommand;
 import com.jshell.errors.JShellDirectoryIsNotAFileException;
 import com.jshell.errors.JShellInvalidPathException;
 
