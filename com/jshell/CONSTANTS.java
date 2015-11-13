@@ -2,6 +2,10 @@ package com.jshell;
 
 public class CONSTANTS {
 
+    /*
+     * Constants for system info
+     */
+
     public static final String DIRMARKER    = System.getProperty("file.separator");
     public static final String OSNAME       = System.getProperty("os.name");
     public static final String HOMEDIR      = System.getProperty("user.home");
@@ -10,12 +14,21 @@ public class CONSTANTS {
     public static final String ROOT_DIR     = "/";
     public static final String HOMEMARKER   = "~";
     public static final String ASCEND_DIR   = "..";
+
+    /*
+     * JShell Java Interpreter Constants
+     */
+
     public static final String JSH_TEMP     = "/tmp/JSHELL/";
     public static final String JSHRT        = HOMEDIR + DIRMARKER + ".jsh" + DIRMARKER;
     public static final String JSHRC        = HOMEDIR + DIRMARKER + ".jshrc";
     public static final String JVTMP        = JSHRT + "Tmp.java";
     public static final String JVCLASS      = JSHRT + "Tmp.class";
     public static final String JVRUN        = JSHRT + "Tmp";
+
+    /*
+     * Terminal ANSI Color Constants
+     */
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -26,6 +39,10 @@ public class CONSTANTS {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
+
+    /*
+     * GUI Constants
+     */
 
     public static final int JSHELL_TERMINAL_CONSOLE = 0;
     public static final int JSHELL_JAVA_SWING_CONSOLE = 1;
