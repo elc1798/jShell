@@ -1,14 +1,14 @@
 package com.jshell;
 
-public class JSHProcMan extends ShellCommand {
+public class JSHProcMan extends JShellCommand {
 
     Runtime command;
     String[] args;
-
+    
     public JSHProcMan(String[] command) {
         args = command;
     }
-
+    
     public void start() throws Exception {
         command = Runtime.getRuntime();
     }

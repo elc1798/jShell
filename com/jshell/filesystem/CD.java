@@ -2,12 +2,12 @@ package com.jshell.filesystem;
 
 import static com.jshell.CONSTANTS.*;
 
-import com.jshell.ShellCommand;
+import com.jshell.JShellCommand;
 import com.jshell.errors.JShellInvalidPathException;
 
 import java.io.File;
 
-public class CD extends ShellCommand {
+public class CD extends JShellCommand {
 
     private DirectoryTree dir_tree;
 

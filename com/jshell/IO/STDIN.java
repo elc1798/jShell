@@ -12,7 +12,6 @@ public class STDIN {
         if (mode == JSHELL_TERMINAL_CONSOLE) {
             Scanner user_in = new Scanner(System.in);
             String retVal = user_in.nextLine();
-            user_in.close();
             user_in = null;
             return retVal;
         } else if (mode == JSHELL_JAVA_SWING_CONSOLE) {
