@@ -13,12 +13,12 @@ public class JshellProcRunner extends JshellCommand {
     @Override
     public void initialize() throws Exception {
         runtime = Runtime.getRuntime();
+        subprocess = runtime.exec(args);
+        subprocess.waitFor();
     }
 
     @Override
     public void execute() throws Exception {
-        subprocess = runtime.exec(args);
-        subprocess.waitFor();
     }
 
     @Override
