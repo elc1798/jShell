@@ -1,12 +1,14 @@
 package org.jshell.proc;
 
+import org.jshell.JshellObject;
+
 /**
  * Abstract class that all {@code JshellCommand} objects extend.
  *
  * @author elc1798
  *
  */
-public abstract class JshellCommand {
+public abstract class JshellCommand extends JshellObject {
 
     private int EXIT_STATUS = 0;
 
