@@ -41,10 +41,13 @@ public class JshellCommandScheduler {
     /**
      * Runs the next command scheduled to run, and removes it from the Scheduler
      * after it runs to completion.
+     *
+     * @return The exits status of the command run
      */
-    public void runNext() {
-        commandQueue.getFirst().start();
+    public int runNext() {
+        int exitStatus = commandQueue.getFirst().start();
         commandQueue.removeFirst();
+        return exitStatus;
     }
 
     /**
