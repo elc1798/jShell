@@ -45,6 +45,7 @@ public class JshellDirectoryChanger extends JshellCommand {
     public void end() throws Exception {
         dir = null;
         oldWorkingDir = null;
+        System.out.println("Set dir to: " + System.getProperty("user.dir"));
     }
 
     @Override
