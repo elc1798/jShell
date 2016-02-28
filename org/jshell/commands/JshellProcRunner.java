@@ -23,24 +23,40 @@ public class JshellProcRunner extends JshellCommand {
         args = _args;
     }
 
-    @Override
-    public void initialize() throws Exception {
-        runtime = Runtime.getRuntime();
-        subprocess = runtime.exec(args);
-        subprocess.waitFor();
-        InputStream processOut = subprocess.getInputStream();
+    public String getStreamOutput(InputStream is) {
+        String retval;
         // Create a temporary Scanner object and store in a variable so we
         // can close it later
-        Scanner s1 = new Scanner(processOut);
+        Scanner s1 = new Scanner(is);
         // Create a scanner with the delimiter "\\A" (Beginning of Input)
         Scanner s2 = s1.useDelimiter("\\A");
         if (s2.hasNext()) {
-            System.out.println(s2.next().trim());
+            retval = s2.next().trim();
+        } else {
+            retval = "";
         }
         // Close the scanners: s2 first, because s2 is a wrapper around s1
         // Then close s1. Duh. :D
         s2.close();
         s1.close();
+        return retval;
+    }
+
+    public String getStandardOut() {
+        return getStreamOutput(subprocess.getInputStream());
+    }
+
+    public String getStandardError() {
+        return getStreamOutput(subprocess.getErrorStream());
+    }
+
+    @Override
+    public void initialize() throws Exception {
+        runtime = Runtime.getRuntime();
+        subprocess = runtime.exec(args);
+        subprocess.waitFor();
+        System.out.println(getStandardOut());
+        System.err.println(getStandardError());
     }
 
     @Override
