@@ -10,4 +10,8 @@ package org.jshell;
  */
 public interface Constants {
     String cwdSystemProperty = "user.dir";
+    String userHomeDir = System.getProperty("user.home");
+
+    String columns = "COLS";
+    String rows = "LINES";
 }
