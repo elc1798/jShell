@@ -1,7 +1,9 @@
 package org.jshell;
 
 import static org.jshell.Constants.rows;
+import static org.jshell.Constants.userHomeDir;
 
+import org.jshell.commands.JshellDirectoryChanger;
 import org.jshell.commands.JshellLeftPrompt;
 import org.jshell.commands.JshellUpdateTermDims;
 
@@ -37,6 +39,7 @@ public class Jshell {
         scheduler = new JshellCommandScheduler();
         env = new JshellEnvVarTracker();
 
+        scheduler.schedule(new JshellDirectoryChanger(userHomeDir));
         scheduleRequiredCommands();
 
         while (!scheduler.isEmpty()) {
