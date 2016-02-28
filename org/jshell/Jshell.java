@@ -1,14 +1,14 @@
 package org.jshell;
 
+import static org.jshell.Constants.columns;
 import static org.jshell.Constants.rows;
 import static org.jshell.Constants.userHomeDir;
+
+import java.util.Scanner;
 
 import org.jshell.commands.JshellDirectoryChanger;
 import org.jshell.commands.JshellLeftPrompt;
 import org.jshell.commands.JshellUpdateTermDims;
-
-import static org.jshell.Constants.columns;
-
 import org.jshell.utils.JshellCommandScheduler;
 import org.jshell.utils.TerminalUtils;
 
@@ -16,6 +16,7 @@ public class Jshell {
 
     public static JshellCommandScheduler scheduler;
     public static JshellEnvVarTracker env;
+    public static Scanner stdin;
 
     public static void updateTermDimensions() {
         if (env == null) {
@@ -38,6 +39,7 @@ public class Jshell {
     public static void main(String[] args) {
         scheduler = new JshellCommandScheduler();
         env = new JshellEnvVarTracker();
+        stdin = new Scanner(System.in);
 
         scheduler.schedule(new JshellDirectoryChanger(userHomeDir));
         scheduleRequiredCommands();

@@ -1,7 +1,5 @@
 package org.jshell.commands;
 
-import java.util.Scanner;
-
 import org.jshell.Jshell;
 import org.jshell.utils.JshellCommand;
 
@@ -9,7 +7,6 @@ public class JshellLeftPrompt extends JshellCommand {
 
     private String prompt;
     private String input;
-    private Scanner userIn;
 
     public JshellLeftPrompt() {
     }
@@ -20,13 +17,11 @@ public class JshellLeftPrompt extends JshellCommand {
         prompt = "$ ";
         // Print the prompt
         System.out.print(prompt);
-        // Create the Scanner
-        userIn = new Scanner(System.in);
     }
 
     @Override
     public void execute() throws Exception {
-        input = userIn.nextLine();
+        input = Jshell.stdin.nextLine();
     }
 
     @Override
