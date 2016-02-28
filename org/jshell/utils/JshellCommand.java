@@ -1,4 +1,4 @@
-package org.jshell.proc;
+package org.jshell.utils;
 
 import org.jshell.JshellObject;
 

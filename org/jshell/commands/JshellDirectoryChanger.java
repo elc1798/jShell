@@ -1,9 +1,10 @@
-package org.jshell.proc;
+package org.jshell.commands;
 
 import java.io.File;
 
 import org.jshell.errors.JshellNoSuchDirectoryError;
 import org.jshell.errors.JshellNotDirectory;
+import org.jshell.utils.JshellCommand;
 
 import static org.jshell.Constants.cwdSystemProperty;
 

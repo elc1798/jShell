@@ -1,4 +1,6 @@
-package org.jshell.proc;
+package org.jshell.commands;
+
+import org.jshell.utils.JshellCommand;
 
 /**
  * Runs a process provided arguments in an array of strings. For example,

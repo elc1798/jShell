@@ -1,6 +1,6 @@
 package org.jshell;
 
-import org.jshell.proc.JshellCommand;
+import org.jshell.utils.JshellCommand;
 
 /**
  * An object that Jshell can read. Among these object classes are {@code Integer},
