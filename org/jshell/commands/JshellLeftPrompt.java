@@ -38,12 +38,10 @@ public class JshellLeftPrompt extends JshellCommand {
     public void end() throws Exception {
         Jshell.scheduler.schedule(new JshellProcRunner(input.split(" ")));
         Jshell.scheduleRequiredCommands();
-        userIn.close();
     }
 
     @Override
     public void interrupted() {
-        userIn.close();
     }
 
 }
