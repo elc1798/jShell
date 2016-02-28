@@ -37,6 +37,7 @@ public class JshellLeftPrompt extends JshellCommand {
     @Override
     public void end() throws Exception {
         Jshell.scheduler.schedule(new JshellProcRunner(input.split(" ")));
+        Jshell.scheduleRequiredCommands();
         userIn.close();
     }
 
